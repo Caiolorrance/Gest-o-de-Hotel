@@ -1,11 +1,4 @@
-"""
-• __init__(self, nome, idade, salario): inicializa gerente.
-• mostrar_informacoes(self): sobrescreve método e mostra salário + bônus.
-• gerar_relatorio(self, funcionarios): percorre lista e imprime dados de cada um.
-"""
 from pessoa import Pessoa
-
-
 class Funcionario(Pessoa):
     Lista_funcionarios=[]
     def __init__(self, nome, idade,salario):
@@ -38,16 +31,6 @@ class Gerente(Funcionario):
             print(f"Folha com bônus do gerente: R$ {total_salarios + (self.salario * 0.1):.2f}")
         print("======================================\n")
 
-"""
-__init__(self, nome, id_func, idade, salario, turno): adiciona turno.
-• @property turno; retorna o turno atual.
-• @turno.setter: altera o turno (valores válidos: manhã, tarde, noite).
-• mostrar_informacoes(self): sobrescreve método, incluindo o turno.
-• registrar_hospede(self, hospede, lista_hospedes): adiciona hóspede à lista.
-• listar_hospedes(self, lista_hospedes): percorre lista e mostra hóspedes.
-• registrar
-"""
-
 class Recepcionista(Funcionario):
     
     lista_hospedes=[]
@@ -78,34 +61,17 @@ class Recepcionista(Funcionario):
     def mostrar_informacoes(self):
         print(f"ID funcionario: {self.id_func} Nome do funcionario: {self.nome} idade: {self.idade} turno:{self.turno} salario: {self.salario}")
     
-    def registrar_hospede(self):
+    def registrar_hospede(self,hospede,lista_hospedes):
 
-        while True:
-            self.nome = input("1 - Parar cadastro\nNome: ")
-            if self.nome == "1":
-                break
-            idade = input("Idade: ")
-            dias_estadia = input("Dias de estadia: ")
-           
-            
-            from pessoa import Hospede
-
-            h = Hospede(self.nome, idade, dias_estadia)
-            self.lista_hospedes.append(h)
-                
-        print("\nRegistro de Hospedes encerrado!")
+        hospede=input("Nome: ")
+        lista_hospedes.append(hospede)
+        
+        
 
     def listar_hospedes(self):
         for hospede in self.lista_hospedes:
                 print(f" - Hospedes registrados: {hospede.nome}, Idade: {hospede.idade}, Dias de estadia: {hospede.dias_estadia} quarto: {hospede.quarto}")
 
-
-
-"""
-• __init__(self, nome, idade, salario, especialidade): define área técnica.
-• @property especialidade: retorna especialidade.
-mostrar_informacoes(self): sobrescreve método, incluindo a especialidade.
-"""
 class TecnicoManutencao(Funcionario):
     def __init__(self, nome, idade, salario=1350, especialidade="indefinido"):
         super().__init__(nome, idade, salario,)

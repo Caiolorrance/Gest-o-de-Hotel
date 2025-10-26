@@ -1,11 +1,3 @@
-"""
-__init__(self, numero, tipo, preco_diaria): inicializa quarto.
-• @property ocupado: retorna se o quarto está ocupado.
-• @property preco_diaria: retorna o preço por diária.
-• @preco_diaria.setter: impede preços negativos.
-• mostrar_informacoes(self): mostra tipo, preço e status.
-"""
-#PRA QUE O ABC?????
 from abc import ABC
 class Quarto(ABC):
     def __init__(self, numero="indefinido", tipo="indefinido", preco_diaria=0):
@@ -35,7 +27,7 @@ class Quarto(ABC):
         print(f"Nº do quarto: {self.numero}, Tipo: {self.tipo}, Preço da diária: {self.preco_diaria}, Status: {status}")
 
 class QuartoSimples(Quarto):
-    def __init__(self, numero, preco_diaria):
+    def __init__(self, numero=101, preco_diaria=300):
         super().__init__(numero, "Simples", preco_diaria)
         self._ocupado=False
 
