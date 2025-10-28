@@ -6,10 +6,36 @@ class Quarto(ABC):
         self.numero=numero
         self.tipo=tipo
         self._preco_diaria=preco_diaria
+        self._ocupado = False
+        
     
     @property
     def ocupado(self):
         return self._ocupado
+    
+    @ocupado.setter
+    def ocupado(self,valor):
+        self._ocupado=valor
+    @property
+    def preco_diaria(self):
+        return self._preco_diaria
+    
+    @preco_diaria.setter
+    def preco_diaria(self,valor):
+        if valor < 0:
+            print("preço da diaria não pode ser negativo!")
+        else:
+            self._preco_diaria=valor
+    
+    def mostrar_informacoes(self):
+        status = "Ocupado" if self._ocupado else "Disponível"
+        print(f" - Quarto {self.numero} - {self.tipo} | Diária: €{self.preco_diaria:.2f} | Status: {status}")
+        
+
+class QuartoSimples(Quarto):
+    def __init__(self, numero, preco_diaria=300):
+        super().__init__(numero, "Simples", preco_diaria)
+        self.preco_diaria=preco_diaria
     
     @property
     def preco_diaria(self):
@@ -17,22 +43,26 @@ class Quarto(ABC):
     
     @preco_diaria.setter
     def preco_diaria(self,valor):
-        if valor<0:
+        if valor < 0:
             print("preço da diaria não pode ser negativo!")
         else:
             self._preco_diaria=valor
-    
-    def mostrar_informacoes(self):
-        status="Ocupado" if self.ocupado else "Disponível"
-        print(f"Nº do quarto: {self.numero}, Tipo: {self.tipo}, Preço da diária: {self.preco_diaria}, Status: {status}")
-
-class QuartoSimples(Quarto):
-    def __init__(self, numero=101, preco_diaria=300):
-        super().__init__(numero, "Simples", preco_diaria)
-        self._ocupado=False
+        
 
 class QuartoLuxo(Quarto):
-    def __init__(self, numero, preco_diaria):
+    def __init__(self, numero, preco_diaria=1000):
         super().__init__(numero, "Luxo", preco_diaria)
-        self._ocupado=False
+        self.preco_diaria=preco_diaria
+    
+    @property
+    def preco_diaria(self):
+        return self._preco_diaria
+    
+    @preco_diaria.setter
+    def preco_diaria(self,valor):
+        if valor < 0:
+            print("preço da diaria não pode ser negativo!")
+        else:
+            self._preco_diaria=valor
+
 

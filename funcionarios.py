@@ -17,30 +17,24 @@ class Gerente(Funcionario):
 
     def gerar_relatorio(self):
         print("\n===== RELATÓRIO DE FUNCIONÁRIOS =====")
-        if not Funcionario.Lista_funcionarios:
-            print("Nenhum funcionário registrado.")
-        else:
-            total_salarios = 0
-            for func in Funcionario.Lista_funcionarios:
-                func.mostrar_informacoes()
-                total_salarios += func.salario
+        lista_funcionarios = []
+        lista_funcionarios.append(gerente)
+        lista_funcionarios.append(recepcionista)
+        lista_funcionarios.append(tecnico)
+        lista_funcionarios.append(tecnico_recepcao)
 
-            print("--------------------------------------")
-            print(f"Total de funcionários: {len(Funcionario.Lista_funcionarios)}")
-            print(f"Folha salarial total: R$ {total_salarios:.2f}")
-            print(f"Folha com bônus do gerente: R$ {total_salarios + (self.salario * 0.1):.2f}")
-        print("======================================\n")
+        for funcionario in lista_funcionarios:
+            funcionario.mostrar_informacoes()
 
 class Recepcionista(Funcionario):
-    
-    lista_hospedes=[]
     def __init__(self, nome, idade, salario, id_func, turno):
         super().__init__(nome, idade, salario,)
 
         self.id_func=id_func
         self._turno=turno
         
-
+   
+    
 
     @property
     def turno(self):
@@ -59,40 +53,36 @@ class Recepcionista(Funcionario):
             self._turno="Noite"
     
     def mostrar_informacoes(self):
-        print(f"ID funcionario: {self.id_func} Nome do funcionario: {self.nome} idade: {self.idade} turno:{self.turno} salario: {self.salario}")
+        print(f"Profissisão: Recepcionista, ID funcionario: {self.id_func}, Nome do funcionario: {self.nome}, idade: {self.idade}, turno:{self.turno}, salario: {self.salario}")
     
-    def registrar_hospede(self,hospede,lista_hospedes):
-
-        hospede=input("Nome: ")
-        lista_hospedes.append(hospede)
+    lista_hospedes=[]
+    def registrar_hospede(self, hospede):
         
+        self.lista_hospedes.append(hospede)
+        print(f"Hóspede {hospede.nome} registrado com sucesso.")
         
-
     def listar_hospedes(self):
+        print("\n--- LISTA DE HÓSPEDES ---")
+        if not self.lista_hospedes:
+            print("Nenhum hóspede cadastrado.")
         for hospede in self.lista_hospedes:
-                print(f" - Hospedes registrados: {hospede.nome}, Idade: {hospede.idade}, Dias de estadia: {hospede.dias_estadia} quarto: {hospede.quarto}")
-
+            hospede.mostrar_informacoes()
+            
 class TecnicoManutencao(Funcionario):
     def __init__(self, nome, idade, salario=1350, especialidade="indefinido"):
-        super().__init__(nome, idade, salario,)
+        super().__init__(nome, idade, salario)
+        self._especialidade = especialidade  # usamos _ para a propriedade
 
-        self.especialidade=especialidade
+    @property
+    def especialidade(self):
+        return self._especialidade
 
-        @property
-        def especialidade(self):
-            return self.especialidade
-        
-        def mostrar_informacoes(self):
-            print(f"Nome: {self.nome} Idade: {self.idade} Salario: {self.salario} Especialidade: {self.especialidade}")
+    @especialidade.setter
+    def especialidade(self, valor):
+        self._especialidade = valor
 
-
-
-"""
-• __init__(self, nome, id_fun, salario, setor, especialidade)
-• registrar_hospede(nome_hospede): de Recepcionista
-• registrar_reparo(descricao): de TecnicoManutencao
-• mostrar_info(): sobrescrito (exibe dados de ambas as funções)
-"""
+    def mostrar_informacoes(self):
+        print(f"Profissisão: Tecnico de Manutenção, Nome: {self.nome},  Idade: {self.idade}, Salário: {self.salario}, Especialidade: {self.especialidade}")
 
 class TecnicoRecepcao(Recepcionista,TecnicoManutencao):
     def __init__(self, nome="", idade=0, salario=1400, id_func="indefinido", turno="indefinido",setor="indefinido", especialidade="indefinido"):
@@ -111,5 +101,12 @@ class TecnicoRecepcao(Recepcionista,TecnicoManutencao):
         
 
     def mostrar_informacoes(self):
-        print(f"ID funcionario: {self.id_func} Nome do funcionario: {self.nome} idade: {self.idade} turno:{self.turno} salario: {self.salario} Setor: {self.setor} Especialidade: {self.especialidade}")
+        print(f"Profissisão: Tecnico de Recepção, ID funcionario: {self.id_func}, Nome do funcionario: {self.nome}, idade: {self.idade}, turno:{self.turno}, salario: {self.salario}, Setor: {self.setor}, Especialidade: {self.especialidade}")
         
+gerente=Gerente("Carlos",45,3000)
+recepcionista = Recepcionista("Claudia", 35, 1000, "12345", "manhã")
+tecnico = TecnicoManutencao("João", 40, 1350, "Elétrica")
+tecnico_recepcao = TecnicoRecepcao("Ana", 30, 1400, "67890", "Tarde", "Recepção", "Hidráulica")
+
+
+
